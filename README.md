@@ -4,7 +4,7 @@ Halite 2 starter project in C#
 ## Usage
 Copy halite.exe into Halite2 directory and run the batch file to start.
 
-This is just the java project blindly converted to C#. Many TODOs still including code clean up, renaming of functions and variables to C# standards and maybe some other enhancements.
+This is just the java project blindly converted to C#.
 
 ## Using the Visual Studio Debugger
 If you would like to use the powerful, built in VS debugger to debug your code then this is one of the many solutions but it's the one I prefer and use most.
