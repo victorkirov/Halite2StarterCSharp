@@ -27,57 +27,55 @@ namespace Halite2.hlt {
             allShipsUnmodifiable = allShips.AsReadOnly();
         }
 
-        public int getHeight() {
+        public int GetHeight() {
             return height;
         }
 
-        public int getWidth() {
+        public int GetWidth() {
             return width;
         }
 
-        public int getMyPlayerId() {
+        public int GetMyPlayerId() {
             return playerId;
         }
 
-        public IList<Player> getAllPlayers() {
+        public IList<Player> GetAllPlayers() {
             return playersUnmodifiable;
         }
 
-        public Player getMyPlayer() {
-            return playersUnmodifiable[getMyPlayerId()];
+        public Player GetMyPlayer() => playersUnmodifiable[GetMyPlayerId()];
+
+        public Ship GetShip(int playerId, int entityId) {
+            return players[playerId].GetShip(entityId);
         }
 
-        public Ship getShip(int playerId, int entityId) {
-            return players[playerId].getShip(entityId);
-        }
-
-        public Planet getPlanet(int entityId) {
+        public Planet GetPlanet(int entityId) {
             return planets[entityId];
         }
 
-        public Dictionary<int, Planet> getAllPlanets() {
+        public Dictionary<int, Planet> GetAllPlanets() {
             return planets;
         }
 
-        public IList<Ship> getAllShips() {
+        public IList<Ship> GetAllShips() {
             return allShipsUnmodifiable;
         }
 
-        public List<Entity> objectsBetween(Position start, Position target) {
+        public List<Entity> ObjectsBetween(Position start, Position target) {
             List<Entity> entitiesFound = new List<Entity>();
 
-            addEntitiesBetween(entitiesFound, start, target, planets.Values.ToList<Entity>());
-            addEntitiesBetween(entitiesFound, start, target, allShips.ToList<Entity>());
+            AddEntitiesBetween(entitiesFound, start, target, planets.Values.ToList<Entity>());
+            AddEntitiesBetween(entitiesFound, start, target, allShips.ToList<Entity>());
 
             return entitiesFound;
         }
 
-        private static void addEntitiesBetween(List<Entity> entitiesFound,
+        private static void AddEntitiesBetween(List<Entity> entitiesFound,
                                                Position start, Position target,
                                                ICollection<Entity> entitiesToCheck) {
 
             foreach (Entity entity in entitiesToCheck) {
-                if (entity.equals(start) || entity.equals(target)) {
+                if (entity.Equals(start) || entity.Equals(target)) {
                     continue;
                 }
                 if (Collision.segmentCircleIntersect(start, target, entity, Constants.FORECAST_FUDGE_FACTOR)) {
@@ -86,28 +84,28 @@ namespace Halite2.hlt {
             }
         }
 
-        public Dictionary<double, Entity> nearbyEntitiesByDistance(Entity entity) {
+        public Dictionary<double, Entity> NearbyEntitiesByDistance(Entity entity) {
             Dictionary<double, Entity> entityByDistance = new Dictionary<double, Entity>();
 
             foreach (Planet planet in planets.Values) {
-                if (planet.equals(entity)) {
+                if (planet.Equals(entity)) {
                     continue;
                 }
-                entityByDistance[entity.getDistanceTo(planet)] = planet;
+                entityByDistance[entity.GetDistanceTo(planet)] = planet;
             }
 
             foreach (Ship ship in allShips) {
-                if (ship.equals(entity)) {
+                if (ship.Equals(entity)) {
                     continue;
                 }
-                entityByDistance[entity.getDistanceTo(ship)] = ship;
+                entityByDistance[entity.GetDistanceTo(ship)] = ship;
             }
 
             return entityByDistance;
         }
 
-        public GameMap updateMap(Metadata mapMetadata) {
-            int numberOfPlayers = MetadataParser.parsePlayerNum(mapMetadata);
+        public GameMap UpdateMap(Metadata mapMetadata) {
+            int numberOfPlayers = MetadataParser.ParsePlayerNum(mapMetadata);
 
             players.Clear();
             planets.Clear();
@@ -117,27 +115,27 @@ namespace Halite2.hlt {
             for (int i = 0; i < numberOfPlayers; ++i) {
                 currentShips.Clear();
                 Dictionary<int, Ship> currentPlayerShips = new Dictionary<int, Ship>();
-                int playerId = MetadataParser.parsePlayerId(mapMetadata);
+                int playerId = MetadataParser.ParsePlayerId(mapMetadata);
 
                 Player currentPlayer = new Player(playerId, currentPlayerShips);
-                MetadataParser.populateShipList(currentShips, playerId, mapMetadata);
+                MetadataParser.PopulateShipList(currentShips, playerId, mapMetadata);
                 allShips.AddRange(currentShips);
 
                 foreach (Ship ship in currentShips) {
-                    currentPlayerShips[ship.getId()] = ship;
+                    currentPlayerShips[ship.GetId()] = ship;
                 }
                 players.Add(currentPlayer);
             }
 
-            int numberOfPlanets = int.Parse(mapMetadata.pop());
+            int numberOfPlanets = int.Parse(mapMetadata.Pop());
 
             for (int i = 0; i < numberOfPlanets; ++i) {
                 List<int> dockedShips = new List<int>();
-                Planet planet = MetadataParser.newPlanetFromMetadata(dockedShips, mapMetadata);
-                planets[planet.getId()] = planet;
+                Planet planet = MetadataParser.NewPlanetFromMetadata(dockedShips, mapMetadata);
+                planets[planet.GetId()] = planet;
             }
 
-            if (!mapMetadata.isEmpty()) {
+            if (!mapMetadata.IsEmpty()) {
                 throw new InvalidOperationException("Failed to parse data from Halite game engine. Please contact maintainers.");
             }
 

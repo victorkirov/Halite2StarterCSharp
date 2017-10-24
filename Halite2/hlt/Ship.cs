@@ -20,35 +20,35 @@ namespace Halite2.hlt
             this.weaponCooldown = weaponCooldown;
         }
 
-        public int getWeaponCooldown()
+        public int GetWeaponCooldown()
         {
             return weaponCooldown;
         }
 
-        public DockingStatus getDockingStatus()
+        public DockingStatus GetDockingStatus()
         {
             return dockingStatus;
         }
 
-        public int getDockingProgress()
+        public int GetDockingProgress()
         {
             return dockingProgress;
         }
 
-        public int getDockedPlanet()
+        public int GetDockedPlanet()
         {
             return dockedPlanet;
         }
 
-        public bool canDock(Planet planet)
+        public bool CanDock(Planet planet)
         {
-            return getDistanceTo(planet) <= Constants.DOCK_RADIUS + planet.getRadius();
+            return GetDistanceTo(planet) <= Constants.DOCK_RADIUS + planet.GetRadius();
         }
 
-        public override string toString()
+        public override string ToString()
         {
             return "Ship[" +
-                    base.toString() +
+                    base.ToString() +
                     ", dockingStatus=" + dockingStatus +
                     ", dockedPlanet=" + dockedPlanet +
                     ", dockingProgress=" + dockingProgress +

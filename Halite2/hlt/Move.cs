@@ -13,12 +13,12 @@ namespace Halite2.hlt
             this.ship = ship;
         }
 
-        public MoveType getType()
+        public MoveType GetMoveType()
         {
             return type;
         }
 
-        public Ship getShip()
+        public Ship GetShip()
         {
             return ship;
         }

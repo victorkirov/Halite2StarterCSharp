@@ -18,30 +18,30 @@ namespace Halite2.hlt
             this.radius = radius;
         }
 
-        public int getOwner()
+        public int GetOwner()
         {
             return owner;
         }
 
-        public int getId()
+        public int GetId()
         {
             return id;
         }
 
-        public int getHealth()
+        public int GetHealth()
         {
             return health;
         }
 
-        public override double getRadius()
+        public override double GetRadius()
         {
             return radius;
         }
 
-        public override string toString()
+        public override string ToString()
         {
             return "Entity[" +
-                    base.toString() +
+                    base.ToString() +
                     ", owner=" + owner +
                     ", id=" + id +
                     ", health=" + health +

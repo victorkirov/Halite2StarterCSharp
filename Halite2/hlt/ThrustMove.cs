@@ -1,6 +1,5 @@
 namespace Halite2.hlt
 {
-
     public class ThrustMove : Move
     {
 
@@ -14,12 +13,12 @@ namespace Halite2.hlt
             this.angleDeg = angleDeg;
         }
 
-        public int getAngle()
+        public int GetAngle()
         {
             return angleDeg;
         }
 
-        public int getThrust()
+        public int GetThrust()
         {
             return thrust;
         }

@@ -11,35 +11,35 @@ namespace Halite2
             string name = args.Length > 0 ? args[0] : "Tamagocchi";
 
             Networking networking = new Networking();
-            GameMap gameMap = networking.initialize(name);
+            GameMap gameMap = networking.Initialize(name);
 
             List<Move> moveList = new List<Move>();
             for (; ; )
             {
                 moveList.Clear();
-                gameMap.updateMap(Networking.readLineIntoMetadata());
+                gameMap.UpdateMap(Networking.ReadLineIntoMetadata());
 
-                foreach (Ship ship in gameMap.getMyPlayer().getShips().Values)
+                foreach (Ship ship in gameMap.GetMyPlayer().GetShips().Values)
                 {
-                    if (ship.getDockingStatus() != Ship.DockingStatus.Undocked)
+                    if (ship.GetDockingStatus() != Ship.DockingStatus.Undocked)
                     {
                         continue;
                     }
 
-                    foreach (Planet planet in gameMap.getAllPlanets().Values)
+                    foreach (Planet planet in gameMap.GetAllPlanets().Values)
                     {
-                        if (planet.isOwned())
+                        if (planet.IsOwned())
                         {
                             continue;
                         }
 
-                        if (ship.canDock(planet))
+                        if (ship.CanDock(planet))
                         {
                             moveList.Add(new DockMove(ship, planet));
                             break;
                         }
 
-                        ThrustMove newThrustMove = Navigation.navigateShipToDock(gameMap, ship, planet, Constants.MAX_SPEED / 2);
+                        ThrustMove newThrustMove = Navigation.NavigateShipToDock(gameMap, ship, planet, Constants.MAX_SPEED / 2);
                         if (newThrustMove != null)
                         {
                             moveList.Add(newThrustMove);
@@ -48,7 +48,7 @@ namespace Halite2
                         break;
                     }
                 }
-                Networking.sendMoves(moveList);
+                Networking.SendMoves(moveList);
             }
         }
     }

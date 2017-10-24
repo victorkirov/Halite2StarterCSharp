@@ -4,7 +4,6 @@ namespace Halite2.hlt
 {
     public class DebugLog
     {
-
         private TextWriter file;
         private static DebugLog instance;
 
@@ -13,19 +12,19 @@ namespace Halite2.hlt
             file = f;
         }
 
-        public static void initialize(TextWriter f)
+        public static void Initialize(TextWriter f)
         {
             instance = new DebugLog(f);
         }
 
-        public static void addLog(string message)
+        public static void AddLog(string message)
         {
             try
             {
                 instance.file.WriteLine(message);
                 instance.file.Flush();
             }
-            catch (IOException e)
+            catch (IOException)
             {
             }
         }

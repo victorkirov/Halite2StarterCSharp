@@ -1,47 +1,46 @@
-using System;
 using System.Collections.Generic;
 
 namespace Halite2.hlt {
     public class MetadataParser {
-        public static void populateShipList(List<Ship> shipsOutput, int owner, Metadata shipsMetadata) {
-            long numberOfShips = long.Parse(shipsMetadata.pop());
+        public static void PopulateShipList(List<Ship> shipsOutput, int owner, Metadata shipsMetadata) {
+            long numberOfShips = long.Parse(shipsMetadata.Pop());
 
             for (int i = 0; i < numberOfShips; ++i) {
-                shipsOutput.Add(newShipFromMetadata(owner, shipsMetadata));
+                shipsOutput.Add(NewShipFromMetadata(owner, shipsMetadata));
             }
         }
 
-        private static Ship newShipFromMetadata(int owner, Metadata metadata) {
-            int id = int.Parse(metadata.pop());
-            double xPos = double.Parse(metadata.pop());
-            double yPos = double.Parse(metadata.pop());
-            int health = int.Parse(metadata.pop());
+        private static Ship NewShipFromMetadata(int owner, Metadata metadata) {
+            int id = int.Parse(metadata.Pop());
+            double xPos = double.Parse(metadata.Pop());
+            double yPos = double.Parse(metadata.Pop());
+            int health = int.Parse(metadata.Pop());
 
             // Ignoring velocity(x,y) which is always (0,0) in current version.
-            metadata.pop();
-            metadata.pop();
+            metadata.Pop();
+            metadata.Pop();
 
-            Ship.DockingStatus dockingStatus = (Ship.DockingStatus)int.Parse(metadata.pop());
-            int dockedPlanet = int.Parse(metadata.pop());
-            int dockingProgress = int.Parse(metadata.pop());
-            int weaponCooldown = int.Parse(metadata.pop());
+            Ship.DockingStatus dockingStatus = (Ship.DockingStatus)int.Parse(metadata.Pop());
+            int dockedPlanet = int.Parse(metadata.Pop());
+            int dockingProgress = int.Parse(metadata.Pop());
+            int weaponCooldown = int.Parse(metadata.Pop());
 
             return new Ship(owner, id, xPos, yPos, health, dockingStatus, dockedPlanet, dockingProgress, weaponCooldown);
         }
 
-        public static Planet newPlanetFromMetadata(List<int> dockedShips, Metadata metadata) {
-            int id = int.Parse(metadata.pop());
-            double xPos = double.Parse(metadata.pop());
-            double yPos = double.Parse(metadata.pop());
-            int health = int.Parse(metadata.pop());
+        public static Planet NewPlanetFromMetadata(List<int> dockedShips, Metadata metadata) {
+            int id = int.Parse(metadata.Pop());
+            double xPos = double.Parse(metadata.Pop());
+            double yPos = double.Parse(metadata.Pop());
+            int health = int.Parse(metadata.Pop());
 
-            double radius = double.Parse(metadata.pop());
-            int dockingSpots = int.Parse(metadata.pop());
-            int currentProduction = int.Parse(metadata.pop());
-            int remainingProduction = int.Parse(metadata.pop());
+            double radius = double.Parse(metadata.Pop());
+            int dockingSpots = int.Parse(metadata.Pop());
+            int currentProduction = int.Parse(metadata.Pop());
+            int remainingProduction = int.Parse(metadata.Pop());
 
-            int hasOwner = int.Parse(metadata.pop());
-            int ownerCandidate = int.Parse(metadata.pop());
+            int hasOwner = int.Parse(metadata.Pop());
+            int ownerCandidate = int.Parse(metadata.Pop());
             int owner;
             if (hasOwner == 1) {
                 owner = ownerCandidate;
@@ -49,21 +48,21 @@ namespace Halite2.hlt {
                 owner = -1; // ignore ownerCandidate
             }
 
-            int dockedShipCount = int.Parse(metadata.pop());
+            int dockedShipCount = int.Parse(metadata.Pop());
             for (int i = 0; i < dockedShipCount; ++i) {
-                dockedShips.Add(int.Parse(metadata.pop()));
+                dockedShips.Add(int.Parse(metadata.Pop()));
             }
 
             return new Planet(owner, id, xPos, yPos, health, radius, dockingSpots,
                               currentProduction, remainingProduction, dockedShips);
         }
 
-        public static int parsePlayerNum(Metadata metadata) {
-            return int.Parse(metadata.pop());
+        public static int ParsePlayerNum(Metadata metadata) {
+            return int.Parse(metadata.Pop());
         }
 
-        public static int parsePlayerId(Metadata metadata) {
-            return int.Parse(metadata.pop());
+        public static int ParsePlayerId(Metadata metadata) {
+            return int.Parse(metadata.Pop());
         }
     }
 }

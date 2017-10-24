@@ -10,12 +10,12 @@ namespace Halite2.hlt
             this.metadata = metadata;
         }
 
-        public string pop()
+        public string Pop()
         {
             return metadata[index++];
         }
 
-        public bool isEmpty()
+        public bool IsEmpty()
         {
             return index == metadata.Length;
         }

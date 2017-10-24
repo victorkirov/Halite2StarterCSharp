@@ -12,47 +12,46 @@ namespace Halite2.hlt {
             this.yPos = yPos;
         }
 
-        public double getXPos() {
+        public double GetXPos() {
             return xPos;
         }
 
-        public double getYPos() {
+        public double GetYPos() {
             return yPos;
         }
 
-        public double getDistanceTo(Position target) {
-            double dx = xPos - target.getXPos();
-            double dy = yPos - target.getYPos();
+        public double GetDistanceTo(Position target) {
+            double dx = xPos - target.GetXPos();
+            double dy = yPos - target.GetYPos();
             return Math.Sqrt(Math.Pow(dx, 2) + Math.Pow(dy, 2));
         }
-
-        // TODO: remove
-        public virtual double getRadius() {
+        
+        public virtual double GetRadius() {
             return 0;
         }
 
-        public int orientTowardsInDeg(Position target) {
-            return Util.angleRadToDegClipped(orientTowardsInRad(target));
+        public int OrientTowardsInDeg(Position target) {
+            return Util.AngleRadToDegClipped(OrientTowardsInRad(target));
         }
 
-        public double orientTowardsInRad(Position target) {
-            double dx = target.getXPos() - xPos;
-            double dy = target.getYPos() - yPos;
+        public double OrientTowardsInRad(Position target) {
+            double dx = target.GetXPos() - xPos;
+            double dy = target.GetYPos() - yPos;
 
             return Math.Atan2(dy, dx) + 2 * Math.PI;
         }
 
-        public Position getClosestPoint(Position target) {
-            double radius = target.getRadius() + Constants.MIN_DISTANCE;
-            double angleRad = target.orientTowardsInRad(this);
+        public Position GetClosestPoint(Position target) {
+            double radius = target.GetRadius() + Constants.MIN_DISTANCE;
+            double angleRad = target.OrientTowardsInRad(this);
 
-            double dx = target.getXPos() + radius * Math.Cos(angleRad);
-            double dy = target.getYPos() + radius * Math.Sin(angleRad);
+            double dx = target.GetXPos() + radius * Math.Cos(angleRad);
+            double dy = target.GetYPos() + radius * Math.Sin(angleRad);
 
             return new Position(dx, dy);
         }
 
-        public bool equals(Object o) {
+        public override bool Equals(Object o) {
             if (this == o) 
                 return true;            
 
@@ -67,18 +66,11 @@ namespace Halite2.hlt {
             return Equals(position.xPos, xPos) && Equals(position.yPos, yPos);
         }
 
-        public int hashCode() {
-            int result;
-            long temp;
-            temp = BitConverter.DoubleToInt64Bits(xPos);
-            result = (int)(temp ^ (temp >> 32));
-            temp = BitConverter.DoubleToInt64Bits(yPos);
-            result = 31 * result + (int)(temp ^ (temp >> 32));
-
-            return result;
+        public override int GetHashCode() {
+            return base.GetHashCode();
         }
 
-        public virtual string toString() {
+        public override string ToString() {
             return "Position(" + xPos + ", " + yPos + ")";
         }
     }

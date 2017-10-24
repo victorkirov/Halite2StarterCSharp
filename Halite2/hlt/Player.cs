@@ -11,15 +11,15 @@ namespace Halite2.hlt {
             this.ships = ships;
         }
 
-        public IDictionary<int, Ship> getShips() {
+        public IDictionary<int, Ship> GetShips() {
             return ships;
         }
 
-        public Ship getShip(int entityId) {
+        public Ship GetShip(int entityId) {
             return ships[entityId];
         }
 
-        public int getId() {
+        public int GetId() {
             return id;
         }
     }

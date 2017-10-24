@@ -9,10 +9,10 @@ namespace Halite2.hlt
         public DockMove(Ship ship, Planet planet)
             : base(MoveType.Dock, ship)
         {
-            destinationId = planet.getId();
+            destinationId = planet.GetId();
         }
 
-        public long getDestinationId()
+        public long GetDestinationId()
         {
             return destinationId;
         }

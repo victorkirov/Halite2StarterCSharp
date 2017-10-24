@@ -19,33 +19,31 @@ namespace Halite2.hlt {
             this.dockedShips = dockedShips.AsReadOnly();
         }
 
-        public int getRemainingProduction() {
-            return remainingProduction;
-        }
+        public int RemainingProduction => remainingProduction;
 
-        public int getCurrentProduction() {
+        public int GetCurrentProduction() {
             return currentProduction;
         }
 
-        public int getDockingSpots() {
+        public int GetDockingSpots() {
             return dockingSpots;
         }
 
-        public IList<int> getDockedShips() {
+        public IList<int> GetDockedShips() {
             return dockedShips;
         }
 
-        public bool isFull() {
+        public bool IsFull() {
             return dockedShips.Count == dockingSpots;
         }
 
-        public bool isOwned() {
-            return getOwner() != -1;
+        public bool IsOwned() {
+            return GetOwner() != -1;
         }
         
-        public override string toString() {
+        public override string ToString() {
             return "Planet[" +
-                    base.toString() +
+                    base.ToString() +
                     ", remainingProduction=" + remainingProduction +
                     ", currentProduction=" + currentProduction +
                     ", dockingSpots=" + dockingSpots +

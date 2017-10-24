@@ -12,38 +12,38 @@ namespace Halite2.hlt
         private static char DOCK_KEY = 'd';
         private static char THRUST_KEY = 't';
 
-        public static void sendMoves(IEnumerable<Move> moves)
+        public static void SendMoves(IEnumerable<Move> moves)
         {
             StringBuilder moveString = new StringBuilder();
 
             foreach (Move move in moves)
             {
-                switch (move.getType())
+                switch (move.GetMoveType())
                 {
                     case Move.MoveType.Noop:
                         continue;
                     case Move.MoveType.Undock:
                         moveString.Append(UNDOCK_KEY)
                                 .Append(" ")
-                                .Append(move.getShip().getId())
+                                .Append(move.GetShip().GetId())
                                 .Append(" ");
                         break;
                     case Move.MoveType.Dock:
                         moveString.Append(DOCK_KEY)
                                 .Append(" ")
-                                .Append(move.getShip().getId())
+                                .Append(move.GetShip().GetId())
                                 .Append(" ")
-                                .Append(((DockMove)move).getDestinationId())
+                                .Append(((DockMove)move).GetDestinationId())
                                 .Append(" ");
                         break;
                     case Move.MoveType.Thrust:
                         moveString.Append(THRUST_KEY)
                                 .Append(" ")
-                                .Append(move.getShip().getId())
+                                .Append(move.GetShip().GetId())
                                 .Append(" ")
-                                .Append(((ThrustMove)move).getThrust())
+                                .Append(((ThrustMove)move).GetThrust())
                                 .Append(" ")
-                                .Append(((ThrustMove)move).getAngle())
+                                .Append(((ThrustMove)move).GetAngle())
                                 .Append(" ");
                         break;
                 }
@@ -51,7 +51,7 @@ namespace Halite2.hlt
             Console.WriteLine(moveString);
         }
 
-        private static String readLine()
+        private static String ReadLine()
         {
             try
             {
@@ -72,33 +72,33 @@ namespace Halite2.hlt
                 }
                 return builder.ToString();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Environment.Exit(0);
                 return null;
             }
         }
 
-        public static Metadata readLineIntoMetadata()
+        public static Metadata ReadLineIntoMetadata()
         {
-            return new Metadata(readLine().Trim().Split(' '));
+            return new Metadata(ReadLine().Trim().Split(' '));
         }
 
-        public GameMap initialize(String botName)
+        public GameMap Initialize(String botName)
         {
-            int myId = int.Parse(readLine());
-            DebugLog.initialize(new StreamWriter(String.Format("{0}_{1}.log", myId, botName)));
+            int myId = int.Parse(ReadLine());
+            DebugLog.Initialize(new StreamWriter(String.Format("{0}_{1}.log", myId, botName)));
 
-            Metadata inputStringMapSize = readLineIntoMetadata();
-            int width = int.Parse(inputStringMapSize.pop());
-            int height = int.Parse(inputStringMapSize.pop());
+            Metadata inputStringMapSize = ReadLineIntoMetadata();
+            int width = int.Parse(inputStringMapSize.Pop());
+            int height = int.Parse(inputStringMapSize.Pop());
             GameMap gameMap = new GameMap(width, height, myId);
 
             // Associate bot name
             Console.WriteLine(botName);
 
-            Metadata inputStringMetadata = readLineIntoMetadata();
-            gameMap.updateMap(inputStringMetadata);
+            Metadata inputStringMetadata = ReadLineIntoMetadata();
+            gameMap.UpdateMap(inputStringMetadata);
 
             return gameMap;
         }
